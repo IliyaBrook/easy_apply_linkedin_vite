@@ -1,49 +1,58 @@
 import '@src/Popup.css';
 import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { themeStorage } from '@extension/storage';
-import type { ComponentPropsWithoutRef } from 'react';
-
-const notificationOptions = {
-  type: 'basic',
-  iconUrl: chrome.runtime.getURL('icon-34.png'),
-  title: 'Injecting content script error',
-  message: 'You cannot inject script here!',
-} as const;
+import { cn, ToggleThemeButton } from '@extension/ui';
 
 const Popup = () => {
   const theme = useStorage(themeStorage);
   const isLight = theme === 'light';
-
+  const borderStyle = 'border border-gray-400 p-2 mb-4 rounded w-[100%] flex flex-col gap-4';
+  const buttonsStyle = 'flex items-center p-2 rounded  drop-shadow w-full justify-center ';
+  const imgStyle = 'w-5';
   return (
-    <div className={`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`}>
-      <header className={`App-header ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
-        {/* <button */}
-        {/*   className={ */}
-        {/*     'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' + */}
-        {/*     (isLight ? 'bg-blue-200 text-black' : 'bg-gray-700 text-white') */}
-        {/*   } */}
-        {/*   onClick={injectContentScript}> */}
-        {/*   Click to inject Content Script */}
-        {/* </button> */}
-        <ToggleButton>Toggle theme</ToggleButton>
+    <div className={cn(`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`, 'px-3 py-1')}>
+      <header className={`${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
+        <div className="flex justify-center">
+          <ToggleThemeButton theme={theme} toggle={themeStorage.toggle}>
+            Toggle Theme
+          </ToggleThemeButton>
+        </div>
+        <div className="">
+          <div className={cn(borderStyle)}>
+            <button className={cn(buttonsStyle, `bg-green-400 hover:bg-green-500`)}>
+              <img src={chrome.runtime.getURL('icons/gear-solid.svg')} alt="Gear icon" className={imgStyle} />
+              <span className="ml-5">Form control</span>
+            </button>
+            <button className={cn(buttonsStyle, `bg-violet-400 hover:bg-violet-500`)}>
+              <img
+                src={chrome.runtime.getURL('icons/arrow-up-right-from-square-solid.svg')}
+                alt="Gear icon"
+                className={imgStyle}
+              />
+              <span className="ml-5">Filter settings</span>
+            </button>
+            <button className={cn(buttonsStyle, `bg-red-400 hover:bg-red-500`)}>
+              <img src={chrome.runtime.getURL('icons/filter-solid.svg')} alt="Gear icon" className={imgStyle} />
+              <span className="ml-5">Personal info</span>
+            </button>
+            <button className={cn(buttonsStyle, `bg-blue-400 hover:bg-blue-500`)}>
+              <img src={chrome.runtime.getURL('icons/user-regular.svg')} alt="Gear icon" className={imgStyle} />
+              <span className="ml-4">External apply</span>
+            </button>
+          </div>
+          <div className={cn(borderStyle)}>
+            <button className={cn(buttonsStyle, `bg-yellow-400 hover:bg-yellow-500`)}>
+              <img src={chrome.runtime.getURL('icons/file-export-solid.svg')} alt="Gear icon" className={imgStyle} />
+              <span className="ml-2">Export settings</span>
+            </button>
+            <button className={cn(buttonsStyle, `bg-blue-400 hover:bg-blue-500`)}>
+              <img src={chrome.runtime.getURL('icons/file-import-solid.svg')} alt="Gear icon" className={imgStyle} />
+              <span className="ml-4">Import settings</span>
+            </button>
+          </div>
+        </div>
       </header>
     </div>
-  );
-};
-
-const ToggleButton = (props: ComponentPropsWithoutRef<'button'>) => {
-  const theme = useStorage(themeStorage);
-  return (
-    <button
-      className={
-        props.className +
-        ' ' +
-        'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' +
-        (theme === 'light' ? 'bg-white text-black shadow-black' : 'bg-black text-white')
-      }
-      onClick={themeStorage.toggle}>
-      {props.children}
-    </button>
   );
 };
 
