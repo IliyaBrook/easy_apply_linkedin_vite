@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import '@src/index.css';
-import FormControl from '@src/FormControl';
+import PersonalInfo from '@src/PersonalInfo';
 
 function init() {
   const appContainer = document.querySelector('#app-container');
@@ -9,7 +9,7 @@ function init() {
   }
   const root = createRoot(appContainer);
 
-  root.render(<FormControl />);
+  root.render(<PersonalInfo />);
 }
 
 init();

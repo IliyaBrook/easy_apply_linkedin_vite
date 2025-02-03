@@ -12,6 +12,6 @@ export default withPageConfig({
   },
   publicDir: resolve(rootDir, 'public'),
   build: {
-    outDir: resolve(rootDir, '..', '..', 'dist', 'form-control'),
+    outDir: resolve(rootDir, '..', '..', 'dist', 'external-apply'),
   },
 });

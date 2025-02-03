@@ -50,7 +50,7 @@ const manifest = {
   devtools_page: 'devtools/index.html',
   web_accessible_resources: [
     {
-      resources: ['*.js', '*.css', '*.svg', 'icon-128.png', 'icon-34.png', 'icons/*.svg', 'pages/formControl/*'],
+      resources: ['*.js', '*.css', '*.svg', 'icon-128.png', 'icon-34.png', 'icons/*.svg'],
       matches: ['*://*/*'],
     },
   ],

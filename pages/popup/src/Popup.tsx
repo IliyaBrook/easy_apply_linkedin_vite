@@ -26,7 +26,9 @@ const Popup = () => {
               <img src={chrome.runtime.getURL('icons/gear-solid.svg')} alt="Gear icon" className={imgStyle} />
               <span className="ml-5">Form control</span>
             </button>
-            <button className={cn(buttonsStyle, `bg-violet-400 hover:bg-violet-500`)}>
+            <button
+              onClick={() => navigate('filter-settings/index.html')}
+              className={cn(buttonsStyle, `bg-violet-400 hover:bg-violet-500`)}>
               <img
                 src={chrome.runtime.getURL('icons/arrow-up-right-from-square-solid.svg')}
                 alt="Gear icon"
@@ -34,13 +36,23 @@ const Popup = () => {
               />
               <span className="ml-5">Filter settings</span>
             </button>
-            <button className={cn(buttonsStyle, `bg-red-400 hover:bg-red-500`)}>
+            <button
+              className={cn(buttonsStyle, `bg-red-400 hover:bg-red-500`)}
+              onClick={() => navigate('personal-info/index.html')}>
               <img src={chrome.runtime.getURL('icons/filter-solid.svg')} alt="Gear icon" className={imgStyle} />
               <span className="ml-5">Personal info</span>
             </button>
-            <button className={cn(buttonsStyle, `bg-blue-400 hover:bg-blue-500`)}>
+            <button
+              className={cn(buttonsStyle, `bg-blue-400 hover:bg-blue-500`)}
+              onClick={() => navigate('external-apply/index.html')}>
               <img src={chrome.runtime.getURL('icons/user-regular.svg')} alt="Gear icon" className={imgStyle} />
               <span className="ml-4">External apply</span>
+            </button>
+            <button
+              className={cn(buttonsStyle, `bg-blue-400 hover:bg-blue-500`)}
+              onClick={() => navigate('new-tab/index.html')}>
+              <img src={chrome.runtime.getURL('icons/user-regular.svg')} alt="Gear icon" className={imgStyle} />
+              <span className="ml-4">Test tab new page</span>
             </button>
           </div>
           <div className={cn(borderStyle)}>
