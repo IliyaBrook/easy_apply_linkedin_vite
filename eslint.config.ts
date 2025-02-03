@@ -54,6 +54,7 @@ export default ts.config(
       'import-x/no-named-as-default-member': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
       'react/prop-types': 'off',
+      'react-hooks/exhaustive-deps': 'off',
     },
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
