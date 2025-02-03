@@ -1,5 +1,5 @@
 import '@src/Popup.css';
-import { useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
+import { navigate, useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
 import { themeStorage } from '@extension/storage';
 import { cn, ToggleThemeButton } from '@extension/ui';
 
@@ -9,6 +9,7 @@ const Popup = () => {
   const borderStyle = 'border border-gray-400 p-2 mb-4 rounded w-[100%] flex flex-col gap-4';
   const buttonsStyle = 'flex items-center p-2 rounded  drop-shadow w-full justify-center ';
   const imgStyle = 'w-5';
+
   return (
     <div className={cn(`App ${isLight ? 'bg-slate-50' : 'bg-gray-800'}`, 'px-3 py-1')}>
       <header className={`${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
@@ -19,7 +20,9 @@ const Popup = () => {
         </div>
         <div className="">
           <div className={cn(borderStyle)}>
-            <button className={cn(buttonsStyle, `bg-green-400 hover:bg-green-500`)}>
+            <button
+              onClick={() => navigate('form-control/index.html')}
+              className={cn(buttonsStyle, `bg-green-400 hover:bg-green-500`)}>
               <img src={chrome.runtime.getURL('icons/gear-solid.svg')} alt="Gear icon" className={imgStyle} />
               <span className="ml-5">Form control</span>
             </button>
