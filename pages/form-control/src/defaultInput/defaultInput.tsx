@@ -1,22 +1,76 @@
-import React from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
-interface IDefaultInputProps {
-  fields: Record<string, string>;
-  isLight: boolean;
-  statusMessage: string;
-  statusColor: string;
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSave: () => void;
-}
+const defaultNullFieldInput = {
+  YearsOfExperience: '',
+  FirstName: '',
+  LastName: '',
+  PhoneNumber: '',
+  City: '',
+  Email: '',
+};
 
-const DefaultInput: React.FC<IDefaultInputProps> = ({
-  fields,
-  handleInputChange,
-  handleSave,
-  statusMessage,
-  statusColor,
-  isLight,
-}) => {
+const DefaultInput: React.FC<{ isLight: boolean }> = ({ isLight }) => {
+  const [fields, setFields] = useState<Record<string, string>>(defaultNullFieldInput);
+  const [statusMessage, setStatusMessage] = useState('To use Auto Apply, fill out the missing values:');
+  const [statusColor, setStatusColor] = useState('text-red-600');
+
+  const loadDefaultFields = () => {
+    chrome.storage.local.get('defaultFields', result => {
+      const storedFields = result.defaultFields || {};
+      if (Object.keys(storedFields).length === 0) {
+        chrome.storage.local.set({ defaultFields: defaultNullFieldInput }, () => {
+          setFields(defaultNullFieldInput);
+          updateStatus(defaultNullFieldInput);
+        });
+      } else {
+        setFields(storedFields);
+        updateStatus(storedFields);
+      }
+    });
+  };
+
+  const updateStatus = (fieldsData: Record<string, string>) => {
+    const allFilled = Object.values(fieldsData).every(value => value.trim() !== '');
+    if (allFilled) {
+      setStatusMessage('You are ready to use auto apply!');
+      setStatusColor('text-green-700');
+    } else {
+      setStatusMessage('To use Auto Apply, fill out the missing values:');
+      setStatusColor('text-red-600');
+    }
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const newFields = { ...fields, [name]: value };
+    setFields(newFields);
+    updateStatus(newFields);
+  };
+
+  const updateConfigDI = (placeholder: string, newValue: string) => {
+    return new Promise<void>(resolve => {
+      chrome.runtime.sendMessage({ action: 'updateInputFieldValue', data: { placeholder, value: newValue } }, () =>
+        resolve(),
+      );
+    });
+  };
+
+  const handleSave = async () => {
+    await new Promise<void>(resolve => {
+      chrome.storage.local.set({ defaultFields: fields }, () => resolve());
+    });
+
+    await updateConfigDI('First name', fields.FirstName);
+    await updateConfigDI('Last name', fields.LastName);
+    await updateConfigDI('Mobile phone number', fields.PhoneNumber);
+
+    loadDefaultFields();
+  };
+
+  useEffect(() => {
+    loadDefaultFields();
+  }, []);
+
   const getInputLabelText = (fieldName: string) => {
     switch (fieldName) {
       case 'YearsOfExperience':
@@ -39,7 +93,6 @@ const DefaultInput: React.FC<IDefaultInputProps> = ({
   return (
     <div>
       <header className={`${isLight ? 'text-gray-900' : 'text-gray-100'} text-center mb-6`}>
-        <h1 className="text-3xl font-bold mb-2">Required Personal Info</h1>
         <h2 id="status-message" className={`${statusColor} text-xl`}>
           {statusMessage}
         </h2>
