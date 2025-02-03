@@ -13,8 +13,6 @@ const notificationOptions = {
 const Popup = () => {
   const theme = useStorage(themeStorage);
   const isLight = theme === 'light';
-  const goGithubSite = () =>
-    chrome.tabs.create({ url: 'https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite' });
 
   const injectContentScript = async () => {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true });
