@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { cn } from '@extension/ui';
 
-interface RadioOption {
+interface IDropDownOptions {
   value: string;
   selected: boolean;
 }
 
-interface RadioConfig {
+interface IDropDown {
   placeholderIncludes: string;
   count: number;
-  options: RadioOption[];
+  options: IDropDownOptions[];
 }
 
 interface DropdownsEntryProps {
@@ -17,7 +17,7 @@ interface DropdownsEntryProps {
 }
 
 const DropdownsEntry: React.FC<DropdownsEntryProps> = ({ isLight }) => {
-  const [dropdowns, setDropdowns] = useState<RadioConfig[]>([]);
+  const [dropdowns, setDropdowns] = useState<IDropDown[]>([]);
 
   useEffect(() => {
     fetchDropdownConfigs(setDropdowns);

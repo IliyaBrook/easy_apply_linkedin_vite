@@ -136,9 +136,6 @@ importers:
       '@extension/dev-utils':
         specifier: workspace:*
         version: link:../packages/dev-utils
-      '@extension/external-apply':
-        specifier: workspace:*
-        version: link:../pages/external-apply
       '@extension/form-control':
         specifier: workspace:*
         version: link:../pages/form-control
@@ -583,6 +580,9 @@ importers:
       '@extension/storage':
         specifier: workspace:*
         version: link:../../packages/storage
+      sweetalert2:
+        specifier: ^11.15.10
+        version: 11.15.10
     devDependencies:
       '@extension/tailwindcss-config':
         specifier: workspace:*
@@ -4213,6 +4213,9 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  sweetalert2@11.15.10:
+    resolution: {integrity: sha512-Sjiwcd5mWiz8X0JFkHsso2EPVQHrLCjVv+xR6Ry2LKf4KY6kSi4U5pM0Tgmn1c7SMfkyDqPal2NWqwj6vck8bw==}
 
   synckit@0.9.1:
     resolution: {integrity: sha512-7gr8p9TQP6RAHusBOSLs46F4564ZrjV8xFmw5zCmgmhGUcw2hxsShhJ6CEiHQMgPDwAQ1fWHPM0ypc4RMAig4A==}
@@ -8867,6 +8870,8 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  sweetalert2@11.15.10: {}
 
   synckit@0.9.1:
     dependencies:

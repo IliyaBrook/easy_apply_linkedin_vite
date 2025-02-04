@@ -21,7 +21,8 @@
   "dependencies": {
     "@extension/shared": "workspace:*",
     "@extension/storage": "workspace:*",
-    "@extension/content-runtime-script": "workspace:*"
+    "@extension/content-runtime-script": "workspace:*",
+    "sweetalert2": "^11.15.10"
   },
   "devDependencies": {
     "@extension/tailwindcss-config": "workspace:*",
