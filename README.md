@@ -1,3 +1,7 @@
+# 🚧 Migration in Progress 🚧
+> **This project is currently under migration and development.**  
+> Some features may be incomplete or unstable.  
+> Stay tuned for updates! 🚀
 
 # Easy Apply LinkedIn Chrome Extension
 
