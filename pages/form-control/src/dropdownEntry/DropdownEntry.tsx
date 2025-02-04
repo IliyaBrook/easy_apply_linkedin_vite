@@ -14,6 +14,8 @@ interface IDropDown {
 
 interface DropdownsEntryProps {
   isLight: boolean;
+  bgColorByTheme: string;
+  textColorByTheme: string;
 }
 
 const DropdownsEntry: React.FC<DropdownsEntryProps> = ({ isLight }) => {

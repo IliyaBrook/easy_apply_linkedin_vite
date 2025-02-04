@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import { cn } from '@extension/ui';
 
 const defaultNullFieldInput = {
   YearsOfExperience: '',
@@ -15,7 +16,13 @@ interface InputFieldConfig {
   count: number;
 }
 
-const DefaultInput: React.FC<{ isLight: boolean }> = ({ isLight }) => {
+interface IInputField {
+  bgColorByTheme: string;
+  textColorByTheme: string;
+  isLight: boolean;
+}
+
+const TextFields: React.FC<IInputField> = ({ isLight, textColorByTheme, bgColorByTheme }) => {
   const [fields, setFields] = useState<Record<string, string>>(defaultNullFieldInput);
   const [statusMessage, setStatusMessage] = useState('To use Auto Apply, fill out the missing values:');
   const [statusColor, setStatusColor] = useState('text-red-600');
@@ -119,43 +126,57 @@ const DefaultInput: React.FC<{ isLight: boolean }> = ({ isLight }) => {
       }
     },
   };
-
+  const blackThemeBorder = !isLight ? ' border border-white rounded' : '';
   return (
-    <div>
-      <header className={`${isLight ? 'text-gray-900' : 'text-gray-100'} text-center mb-6`}>
+    <div className={bgColorByTheme}>
+      <header className={cn('text-center mb-6', textColorByTheme)}>
         <h2 id="status-message" className={`${statusColor} text-xl`}>
           {statusMessage}
         </h2>
       </header>
-      <section id="input-fields" className="space-y-4">
+      <section id="input-fields" className={cn('p-4', bgColorByTheme, blackThemeBorder)}>
         {Object.keys(fields).map(fieldName => (
           <div key={fieldName} className="mb-4">
-            <label className="block mb-1 font-bold text-base">{getInputLabelText(fieldName)}</label>
+            <label className={cn('block mb-1 font-bold text-base', textColorByTheme)}>
+              {getInputLabelText(fieldName)}
+            </label>
             <input
               type="text"
               name={fieldName}
               value={fields[fieldName]}
               onChange={handleInputChange}
-              className={`w-full p-2 border-2 rounded ${
-                !fields[fieldName].trim() ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={cn(
+                'w-full p-2 border-2 rounded',
+                !fields[fieldName].trim() ? 'border-red-500' : isLight ? 'border-gray-300' : 'border-white',
+                bgColorByTheme,
+                textColorByTheme,
+              )}
               {...save}
             />
           </div>
         ))}
         {additionalFields.map(config => (
-          <div key={config.placeholderIncludes} className="mb-4">
-            <label className="block mb-1 font-bold text-base">{config.placeholderIncludes}</label>
-            <input
-              onBlur={() => {
-                handleSave();
-              }}
-              type="text"
-              value={config.defaultValue}
-              onChange={e => handleAdditionalInputChange(e, config.placeholderIncludes)}
-              className={`w-full p-2 border-2 rounded ${!config.defaultValue.trim() ? 'border-red-500' : 'border-gray-300'}`}
-              {...save}
-            />
+          <div className={cn('p-4', bgColorByTheme)}>
+            <div key={config.placeholderIncludes} className="mb-4">
+              <label className={cn('block mb-1 font-bold text-base', textColorByTheme)}>
+                {config.placeholderIncludes}
+              </label>
+              <input
+                onBlur={() => {
+                  handleSave();
+                }}
+                type="text"
+                value={config.defaultValue}
+                onChange={e => handleAdditionalInputChange(e, config.placeholderIncludes)}
+                className={cn(
+                  'w-full p-2 border-2 rounded',
+                  !config.defaultValue.trim() ? 'border-red-500' : isLight ? 'border-gray-300' : 'border-white',
+                  bgColorByTheme,
+                  textColorByTheme,
+                )}
+                {...save}
+              />
+            </div>
           </div>
         ))}
       </section>
@@ -163,4 +184,4 @@ const DefaultInput: React.FC<{ isLight: boolean }> = ({ isLight }) => {
   );
 };
 
-export default DefaultInput;
+export default TextFields;

@@ -12,11 +12,13 @@ interface DropdownConfig {
   options: DropdownOption[];
 }
 
-interface RadioButtonsEntryProps {
+interface IRadioButtonsEntry {
+  bgColorByTheme: string;
+  textColorByTheme: string;
   isLight: boolean;
 }
 
-const RadioButtonsEntry: React.FC<RadioButtonsEntryProps> = ({ isLight }) => {
+const RadioButtonsEntry: React.FC<IRadioButtonsEntry> = ({ isLight, bgColorByTheme, textColorByTheme }) => {
   const [radioButtons, setRadioButtons] = useState<DropdownConfig[]>([]);
 
   useEffect(() => {
@@ -46,23 +48,21 @@ const RadioButtonsEntry: React.FC<RadioButtonsEntryProps> = ({ isLight }) => {
   return (
     <div className="space-y-4">
       {radioButtons.map(config => (
-        <div
-          key={config.placeholderIncludes}
-          className={cn('p-4 border rounded-lg', isLight ? 'bg-white' : 'bg-gray-700')}>
-          <h3 className="text-lg font-bold">{config.placeholderIncludes}</h3>
-          <p className="text-sm text-gray-500">Counter: {config.count}</p>
+        <div key={config.placeholderIncludes} className={cn('p-4 border rounded-lg', bgColorByTheme)}>
+          <h3 className={cn('text-lg font-bold', textColorByTheme)}>{config.placeholderIncludes}</h3>
+          <p className={cn('text-sm', textColorByTheme)}>Counter: {config.count}</p>
           <div className="flex gap-4 mt-2">
             {config.options.map(option => (
               <label key={option.value} className="flex items-center gap-2">
                 <input
                   type="radio"
-                  name={`radio-${config.placeholderIncludes}`}
+                  name={cn(`radio-${config.placeholderIncludes}`, isLight ? 'bg-slate-50' : 'bg-gray-800')}
                   value={option.value}
                   checked={option.selected}
                   onChange={() => handleRadioChange(config.placeholderIncludes, option.value)}
                   className="w-4 h-4"
                 />
-                {option.value}
+                <span className={textColorByTheme}>{option.value}</span>
               </label>
             ))}
           </div>

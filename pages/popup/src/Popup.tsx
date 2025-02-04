@@ -105,12 +105,6 @@ const Popup = () => {
               <img src={chrome.runtime.getURL('icons/user-regular.svg')} alt="Gear icon" className={imgStyle} />
               <span className="ml-4">External apply</span>
             </button>
-            <button
-              className={cn(buttonsStyle, `bg-blue-400 hover:bg-blue-500`)}
-              onClick={() => navigate('new-tab/index.html')}>
-              <img src={chrome.runtime.getURL('icons/user-regular.svg')} alt="Gear icon" className={imgStyle} />
-              <span className="ml-4">Test tab new page</span>
-            </button>
           </div>
           <div className={cn(borderStyle)}>
             <button className={cn(buttonsStyle, `bg-yellow-400 hover:bg-yellow-500`)} onClick={handleExport}>
